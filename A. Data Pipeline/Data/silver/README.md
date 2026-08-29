@@ -1,1 +1,1 @@
-**Run the script for data**
+**Run the script to get the data**
