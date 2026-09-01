@@ -307,9 +307,9 @@ Execute analytics notebooks:
 
 ---
 
-## 9. License & Regulatory Acknowledgments
-
-This project is distributed under the **MIT License**. All datasets are sourced from public US government APIs:
+## 9. Copyright & Usage
+This project is developed by Faewon for portfolio demonstration and credit risk research purposes. All rights reserved.
+All datasets are sourced from public US government APIs:
 - **CFPB / FFIEC**: Home Mortgage Disclosure Act (HMDA) Data Browser API.
 - **Federal Reserve Bank of St. Louis**: Federal Reserve Economic Data (FRED) API.
 - **Federal Deposit Insurance Corporation**: FDIC BankFind Suite API.
