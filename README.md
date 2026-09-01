@@ -93,7 +93,7 @@ CreditRisk-LoanDefault-PredictionEngine/
 │   │   ├── 02_Risk_Segmentation.png         # Page 2: Risk by product, purpose & income tiers
 │   │   ├── 03_Macro_Trends.png              # Page 3: Federal Reserve rates & delinquency cycles
 │   │   ├── 04_Stress_Testing.png            # Page 4: Scenario PD migration & Expected Loss
-│   │   └── 05_Model_Performance.png        # Page 5: ROC/PR curves & governance matrix
+│   │   └── 05_Model_Performance.png         # Page 5: ROC/PR curves & governance matrix
 │   ├── models/                              # Serialized model artifacts (.pkl)
 │   │   ├── xgboost_model.pkl                # Champion model (Production scoring engine)
 │   │   ├── logistic_model.pkl               # Challenger model (Stress testing & baseline)
