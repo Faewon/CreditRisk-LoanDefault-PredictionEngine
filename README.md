@@ -46,72 +46,69 @@ This platform establishes an institutional-grade, automated **Credit Risk Assess
 ```
 CreditRisk-LoanDefault-PredictionEngine/
 │
-├── README.md                            # Master project documentation (Root)
-├── requirements.txt                     # Python dependencies
-├── .gitignore                           # Git ignore rules
+├── README.md                                # Master project documentation (Root)
+├── requirements.txt                         # Python dependencies
+├── .gitignore                               # Git ignore rules
+├── .gitattributes                           # Git LFS tracking configuration for large data files
 │
-├── A. Data Pipeline/                    # 1. MEDALLION DATA ENGINEERING PIPELINE
-│   ├── README.md                        # Data pipeline architecture & guide
-│   ├── 01_scrape_hmda_loans.ipynb       # Scrape 2.78M records from CFPB HMDA API
-│   ├── 02_scrape_fred_macro.ipynb       # Extract Federal Reserve (FRED) macro series
-│   ├── 03_scrape_fdic_banking.ipynb     # Scrape FDIC commercial bank statistics
-│   ├── 04_bronze_to_silver.ipynb        # Clean, parse, impute, and temporal join
-│   ├── 05_silver_to_gold.ipynb          # Feature engineering, risk buckets, and OHE
+├── A. Data Pipeline/                        # 1. MEDALLION DATA ENGINEERING PIPELINE
+│   ├── README.md                            # Data pipeline architecture & guide
+│   ├── 01_scrape_hmda_loans.ipynb           # Scrape 2.78M records from CFPB HMDA API
+│   ├── 02_scrape_fred_macro.ipynb           # Extract Federal Reserve (FRED) macro series
+│   ├── 03_scrape_fdic_banking.ipynb         # Scrape FDIC commercial bank statistics
+│   ├── 04_bronze_to_silver.ipynb            # Clean, parse, impute, and temporal join
+│   ├── 05_silver_to_gold.ipynb              # Feature engineering, risk buckets, and OHE
 │   │
-│   ├── Data/                            # Git LFS tracked storage (Bronze, Silver, Gold)
-│   │   ├── bronze/                      # RAW LAYER: Untouched raw API extractions
-│   │   │   ├── hmda_loans_raw.csv       # 2.78M raw mortgage records from CFPB API
-│   │   │   ├── fred_macro_raw.csv       # 10 raw macroeconomic time series from FRED API
-│   │   │   ├── fdic_financials_raw.csv  # Raw FDIC commercial bank balance sheet data
-│   │   │   └── fdic_failures_raw.csv    # Raw FDIC bank failure historical log
-│   │   ├── silver/                      # CLEANED LAYER: Parsed, typed, imputed & joined
-│   │   │   ├── loans_cleaned.csv        # Cleaned HMDA data with target variable (is_denied)
-│   │   │   ├── macro_cleaned.csv        # Resampled monthly macro series with YoY metrics
-│   │   │   └── loans_with_macro.csv     # Temporally joined loan records with macro features
-│   │   └── gold/                        # FEATURE STORE LAYER: Modeling & BI ready
-│   │       ├── risk_feature_store.csv   # Final encoded feature store for ML training
-│   │       └── stress_test_results.csv  # Simulation matrix across 4 macro shock scenarios
+│   ├── Data/                                # Git LFS tracked storage (Bronze, Silver, Gold)
+│   │   ├── bronze/                          # RAW LAYER: Untouched raw API extractions
+│   │   │   ├── hmda_loans_raw.csv           # 2.78M raw mortgage records from CFPB API
+│   │   │   ├── fred_macro_raw.csv           # 10 raw macroeconomic time series from FRED API
+│   │   │   ├── fdic_financials_raw.csv      # Raw FDIC commercial bank balance sheet data
+│   │   │   └── fdic_failures_raw.csv        # Raw FDIC bank failure historical log
+│   │   ├── silver/                          # CLEANED LAYER: Parsed, typed, imputed & joined
+│   │   │   ├── loans_cleaned.csv            # Cleaned HMDA data with target variable (is_denied)
+│   │   │   ├── macro_cleaned.csv            # Resampled monthly macro series with YoY metrics
+│   │   │   └── loans_with_macro.csv         # Temporally joined loan records with macro features
+│   │   └── gold/                            # FEATURE STORE LAYER: Modeling & BI ready
+│   │       ├── risk_feature_store.csv       # Final encoded feature store for ML training
+│   │       └── stress_test_results.csv      # Simulation matrix across 4 macro shock scenarios
 │   │
-│   └── src/                             # REUSABLE PYTHON CORE MODULES
-│       ├── __init__.py                  # Package exports
-│       ├── hmda_scraper.py              # Streaming API client for large HMDA datasets
-│       ├── fred_client.py               # Batch series client with error resilience for FRED
-│       ├── fdic_scraper.py              # FDIC BankFind API scraper
-│       ├── cleaning.py                  # Cleaning, null imputation & join utilities
-│       └── feature_engineering.py       # Gold feature store generator & risk encoders
+│   └── src/                                 # REUSABLE PYTHON CORE MODULES
+│       ├── __init__.py                      # Package exports
+│       ├── hmda_scraper.py                  # Streaming API client for large HMDA datasets
+│       ├── fred_client.py                   # Batch series client with error resilience for FRED
+│       ├── fdic_scraper.py                  # FDIC BankFind API scraper
+│       ├── cleaning.py                      # Cleaning, null imputation & join utilities
+│       └── feature_engineering.py           # Gold feature store generator & risk encoders
 │
-├── B. ML & Analytics/                   # 2. MACHINE LEARNING & POWER BI
-│   ├── README.md                        # Modeling, stress testing & BI documentation
-│   ├── 01_eda.ipynb                     # Exploratory Data Analysis & visual profiling
-│   ├── 02_modeling.ipynb                # ML training (XGBoost & Logistic Regression)
-│   ├── 03_stress_testing.ipynb          # Macroeconomic scenario simulations
+├── B. ML & Analytics/                       # 2. MACHINE LEARNING & POWER BI
+│   ├── README.md                            # Modeling, stress testing & BI documentation
+│   ├── 01_eda.ipynb                         # Exploratory Data Analysis & visual profiling
+│   ├── 02_modeling.ipynb                    # ML training (XGBoost & Logistic Regression)
+│   ├── 03_stress_testing.ipynb              # Macroeconomic scenario simulations
 │   │
-│   ├── dashboard/                       # POWER BI ARTIFACTS & SCREENSHOTS
-│   │   ├── CreditRisk_Dashboard.pbix    # Complete 5-page interactive dashboard
-│   │   ├── 01_NPL_Overview.png          # Page 1: Portfolio exposure & denial KPIs
-│   │   ├── 02_Risk_Segmentation.png     # Page 2: Risk by product, purpose & income tiers
-│   │   ├── 03_Macro_Trends.png          # Page 3: Federal Reserve rates & delinquency cycles
-│   │   ├── 04_Stress_Testing.png        # Page 4: Scenario PD migration & Expected Loss
-│   │   └── 05_Model_Performance.png    # Page 5: ROC/PR curves & governance matrix
-│   ├── models/                          # Serialized model artifacts (.pkl)
-│   │   ├── xgboost_model.pkl            # Champion model (Production scoring engine)
-│   │   ├── logistic_model.pkl           # Challenger model (Stress testing & baseline)
-│   │   └── scaler.pkl                   # StandardScaler fitted on training features
-│   └── models results/                  # Evaluation Visualizations & Diagnostic Curves
-│       ├── model_comparison.png         # High-res ROC Curve & Precision-Recall curves
-│       └── stress_test_results.png      # Scenario-based Mean PD bar chart
+│   ├── dashboard/                           # POWER BI ARTIFACTS & SCREENSHOTS
+│   │   ├── CreditRisk_Dashboard.pbix        # Complete 5-page interactive dashboard
+│   │   ├── 01_NPL_Overview.png              # Page 1: Portfolio exposure & denial KPIs
+│   │   ├── 02_Risk_Segmentation.png         # Page 2: Risk by product, purpose & income tiers
+│   │   ├── 03_Macro_Trends.png              # Page 3: Federal Reserve rates & delinquency cycles
+│   │   ├── 04_Stress_Testing.png            # Page 4: Scenario PD migration & Expected Loss
+│   │   └── 05_Model_Performance.png        # Page 5: ROC/PR curves & governance matrix
+│   ├── models/                              # Serialized model artifacts (.pkl)
+│   │   ├── xgboost_model.pkl                # Champion model (Production scoring engine)
+│   │   ├── logistic_model.pkl               # Challenger model (Stress testing & baseline)
+│   │   └── scaler.pkl                       # StandardScaler fitted on training features
+│   └── models results/                      # Evaluation Visualizations & Diagnostic Curves
+│       ├── model_comparison.png             # High-res ROC Curve & Precision-Recall curves
+│       └── stress_test_results.png          # Scenario-based Mean PD bar chart
 │
-└── C. BA Artifacts/                     # 3. BUSINESS ANALYSIS & ENTERPRISE ARCHITECTURE
-    ├── README.md                        # BA artifacts overview & transition metrics
-    ├── BRD_Credit_Appraisal.md          # Business Requirements Document (BRD)
-    ├── DFD_Loan_Application.md          # Data Flow Diagrams (Context Level 0 & Level 1)
-    ├── BPMN_AsIs_ToBe.md                # As-Is vs. To-Be Business Process Models
-    ├── User_Stories_RACI.md             # Gherkin User Stories & Enterprise RACI Matrix
-    └── diagrams/                        # Draw.io source XML diagrams and exported PNGs
-        ├── bpmn_asis.png                # Traditional 3-5 days manual underwriting BPMN
-        ├── bpmn_tobe.png                # Medallion & ML automated straight-through BPMN
-        ├── dfd_level0.png               # Context boundary diagram
-        └── dfd_level1.png               # Detailed process decomposition diagram
+└── C. BA Artifacts/                         # 3. BUSINESS ANALYSIS & ENTERPRISE ARCHITECTURE
+    ├── README.md                            # BA artifacts overview & transition metrics
+    ├── BRD_Credit_Appraisal.md              # Business Requirements Document (BRD)
+    ├── DFD_Loan_Application.md              # Data Flow Diagrams (Context Level 0 & Level 1)
+    ├── User_Stories_RACI.md                 # Gherkin User Stories & Enterprise RACI Matrix
+    ├── bpmn_asis.png                        # Traditional 3-5 days manual underwriting BPMN
+    └── bpmn_tobe.png                        # Medallion & ML automated straight-through BPMN
 ```
 
 ---
@@ -307,9 +304,9 @@ Execute analytics notebooks:
 
 ---
 
-## 9. Copyright & Usage
-This project is developed by Faewon for portfolio demonstration and credit risk research purposes. All rights reserved.
-All datasets are sourced from public US government APIs:
+## 9. Copyright & Acknowledgments
+
+This project is developed by **Faewon** for portfolio demonstration and credit risk research purposes. All datasets are sourced from public US government APIs:
 - **CFPB / FFIEC**: Home Mortgage Disclosure Act (HMDA) Data Browser API.
 - **Federal Reserve Bank of St. Louis**: Federal Reserve Economic Data (FRED) API.
 - **Federal Deposit Insurance Corporation**: FDIC BankFind Suite API.
