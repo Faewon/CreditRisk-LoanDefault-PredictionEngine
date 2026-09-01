@@ -61,7 +61,7 @@ A. Data Pipeline/
 | Data Source | Provider | Ingestion Protocol | Authentication | Volume / Scope |
 |---|---|---|---|---|
 | **HMDA Loan Application Register** | CFPB / FFIEC | REST GET (Streamed CSV) | None required | 2.78M mortgage records across CA, TX, FL |
-| **Macroeconomic Time-Series** | Federal Reserve (FRED) | REST GET (JSON) | API Key (`.env`) | 10 Series (Fed Funds, 30Y Mortgage, CPI, Unemp) |
+| **Macroeconomic Time-Series** | Federal Reserve (FRED) | REST GET (JSON) | Direct FRED API Key | 10 Series (Fed Funds, 30Y Mortgage, CPI, Unemp) |
 | **BankFind Suite** | FDIC | REST GET (JSON) | None required | Institutional balance sheet & failure data |
 
 ---
@@ -96,12 +96,15 @@ A. Data Pipeline/
 ## 5. Step-by-Step Execution Guide
 
 ### Prerequisites
-Ensure dependencies are installed and configure your `.env` file in the root repository directory:
+Install the required project dependencies:
 ```bash
 pip install -r ../requirements.txt
 ```
-```env
-FRED_API_KEY=your_fred_api_key_here
+
+### FRED API Configuration
+In `02_scrape_fred_macro.ipynb` (or `src/fred_client.py`), provide your FRED API key directly:
+```python
+FRED_API_KEY = "your_fred_api_key_here"
 ```
 
 ### Notebook Execution Order:
